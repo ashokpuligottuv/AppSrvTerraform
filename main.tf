@@ -1,6 +1,6 @@
 terraform {
   required_version = ">= 1.3.0"
-  
+
   # 1. Define your required providers ONCE
   required_providers {
     azurerm = {
@@ -51,9 +51,9 @@ resource "azurerm_resource_group" "rg" {
 module "app_service" {
   source = "./modules/app_service"
 
-  environment         = local.env
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
+  environment          = local.env
+  resource_group_name  = azurerm_resource_group.rg.name
+  location             = azurerm_resource_group.rg.location
   app_service_plan_sku = lookup(local.sku, local.env, "B1")
 
   tags = {

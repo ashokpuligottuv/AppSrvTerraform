@@ -17,9 +17,9 @@ resource "azurerm_linux_web_app" "app" {
   tags                = var.tags
 
   site_config {
-    always_on        = var.app_service_plan_sku == "F1" ? false : true
-    ftps_state       = "FtpsOnly"
-    
+    always_on  = var.app_service_plan_sku == "F1" ? false : true
+    ftps_state = "FtpsOnly"
+
     application_stack {
       dotnet_version = "8.0" # Tailor this stack to your runtime requirements
     }

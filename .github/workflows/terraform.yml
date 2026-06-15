@@ -50,9 +50,9 @@ jobs:
     - name: Select Terraform Workspace
       run: |
         if [ "${{ github.ref_name }}" = "main" ]; then
-          ENVIRONMENT="prod"
-        else
           ENVIRONMENT="dev"
+        else
+          ENVIRONMENT="prod"
         fi
         echo "Target Environment: $ENVIRONMENT"
         terraform workspace select $ENVIRONMENT || terraform workspace new $ENVIRONMENT

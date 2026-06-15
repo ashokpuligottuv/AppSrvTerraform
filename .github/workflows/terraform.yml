@@ -8,7 +8,7 @@ on:
   pull_request:
     branches:
       - main
-
+  workflow_dispatch: # 🚀 This enables the manual "Run workflow" button in GitHub
 permissions:
   contents: read
   pull-requests: write

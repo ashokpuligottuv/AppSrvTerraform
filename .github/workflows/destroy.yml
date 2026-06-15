@@ -1,0 +1,47 @@
+name: "Terraform Infrastructure Teardown"
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Which environment to destroy?'
+        required: true
+        default: 'dev'
+        type: choice
+        options:
+        - dev
+        - prod
+
+permissions:
+  contents: read
+
+jobs:
+  destroy:
+    name: "Destroying Infrastructure"
+    runs-on: ubuntu-latest
+    
+    env:
+      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v6
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v4
+      with:
+        terraform_version: "1.8.0"
+
+    - name: Terraform Init
+      run: terraform init
+
+    - name: Select Workspace
+      run: |
+        echo "Targeting Environment: ${{ github.event.inputs.environment }}"
+        terraform workspace select ${{ github.event.inputs.environment }}
+
+    - name: Terraform Destroy
+      run: terraform destroy -auto-approve

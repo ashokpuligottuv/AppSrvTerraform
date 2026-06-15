@@ -29,11 +29,11 @@ jobs:
     steps:
     # 1. Clone the repository code onto the GitHub runner
     - name: Checkout Code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
 
     # 2. Install the specific version of Terraform CLI
     - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v3
+      uses: hashicorp/setup-terraform@v4
       with:
         terraform_version: "1.8.0" # Match your local version preference
 
